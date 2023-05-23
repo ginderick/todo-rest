@@ -12,7 +12,9 @@ const todos = (app: Router) => {
       const todosService = Container.get(TodosService);
       const todos = await todosService.getTodos();
       return res.status(200).json(todos);
-    } catch (error) {}
+    } catch (error) {
+      return next(error);
+    }
   });
 
   route.post('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -20,7 +22,9 @@ const todos = (app: Router) => {
       const todosService = Container.get(TodosService);
       const todos = await todosService.addTodo(req.body);
       return res.status(201).json(todos);
-    } catch (error) {}
+    } catch (error) {
+      return next(error);
+    }
   });
 };
 
