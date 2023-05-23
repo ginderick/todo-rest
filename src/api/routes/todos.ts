@@ -73,6 +73,22 @@ const todos = (app: Router) => {
       return next(error);
     }
   });
+
+  route.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const todosService = Container.get(TodosService);
+
+      const id = +req.params.id!;
+
+      const todo = await todosService.deleteTodo(id);
+
+      return res.status(200).json({
+        message: 'Todo item deleted successfully',
+      });
+    } catch (error) {
+      return next(error);
+    }
+  });
 };
 
 export default todos;

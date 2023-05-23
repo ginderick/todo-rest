@@ -42,4 +42,12 @@ export default class TodosService {
 
     return todoItem;
   }
+
+  public async deleteTodo(id: number) {
+    const todoItem = prisma.todo.delete({
+      where: {id: id},
+    });
+
+    return todoItem;
+  }
 }
