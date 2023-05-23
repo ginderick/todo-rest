@@ -1,4 +1,6 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import TodosService from '../../services/todos';
+import {NextFunction, Request, Response, Router} from 'express';
+import Container from 'typedi';
 
 const route = Router();
 
@@ -7,7 +9,9 @@ const todos = (app: Router) => {
 
   route.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.status(200).send({ Message: 'Hello world' });
+      const todosService = Container.get(TodosService);
+      const todos = await todosService.getTodos();
+      return res.status(200).json(todos);
     } catch (error) {}
   });
 };
