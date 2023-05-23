@@ -12,7 +12,7 @@ const todos = (app: Router) => {
       const todosService = Container.get(TodosService);
 
       const page = +req.query.page! || 1;
-      const limit = +req.query.limit! || 1;
+      const limit = +req.query.limit! || 10;
 
       const todos = await todosService.getTodos(page, limit);
       return res.status(200).json({
