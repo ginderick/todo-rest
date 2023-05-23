@@ -3,8 +3,12 @@ import prisma from '../../prisma';
 
 @Service()
 export default class TodosService {
-  public async getTodos() {
-    const todos = prisma.todo.findMany({});
+  public async getTodos(page: number, limit: number) {
+    const todos = prisma.todo.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {dateCreated: 'desc'},
+    });
     return todos;
   }
 
