@@ -14,6 +14,14 @@ const todos = (app: Router) => {
       return res.status(200).json(todos);
     } catch (error) {}
   });
+
+  route.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const todosService = Container.get(TodosService);
+      const todos = await todosService.addTodo(req.body);
+      return res.status(200).json(todos);
+    } catch (error) {}
+  });
 };
 
 export default todos;
