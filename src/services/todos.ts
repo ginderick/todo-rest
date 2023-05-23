@@ -1,9 +1,10 @@
 import {Service} from 'typedi';
+import prisma from '../../prisma';
 
 @Service()
 export default class TodosService {
   public async getTodos() {
-    const todos = {todo1: 'todo'};
+    const todos = prisma.todo.findMany({});
     return todos;
   }
 }
