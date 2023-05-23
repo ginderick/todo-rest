@@ -15,3 +15,12 @@ model User {
   username        String @unique
   hashed_password String
 }
+
+model Todo {
+  id            Int      @id @default(autoincrement())
+  name          String
+  description   String
+  remarks       String
+  dateCreated   DateTime
+  dateCompleted DateTime
+}
