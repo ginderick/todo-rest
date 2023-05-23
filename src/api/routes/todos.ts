@@ -19,7 +19,7 @@ const todos = (app: Router) => {
     try {
       const todosService = Container.get(TodosService);
       const todos = await todosService.addTodo(req.body);
-      return res.status(200).json(todos);
+      return res.status(201).json(todos);
     } catch (error) {}
   });
 };
