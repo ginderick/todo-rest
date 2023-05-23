@@ -12,6 +12,15 @@ export default class TodosService {
     return todos;
   }
 
+  public async getTodo(id: number) {
+    const todo = prisma.todo.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return todo;
+  }
+
   public async addTodo(todo: any) {
     const dateCreated = new Date();
     const todoItem = prisma.todo.create({
