@@ -17,10 +17,10 @@ model User {
 }
 
 model Todo {
-  id            Int      @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   name          String
   description   String
   remarks       String
   dateCreated   DateTime
-  dateCompleted DateTime
+  dateCompleted DateTime?
 }
