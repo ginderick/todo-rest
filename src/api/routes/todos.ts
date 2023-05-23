@@ -24,6 +24,24 @@ const todos = (app: Router) => {
     }
   });
 
+  route.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const todosService = Container.get(TodosService);
+
+      const id = +req.params.id!;
+
+      const todo = await todosService.getTodo(id);
+
+      if (todo) {
+        return res.status(200).json(todo);
+      } else {
+        return res.status(404).json({message: 'item not found'});
+      }
+    } catch (error) {
+      return next(error);
+    }
+  });
+
   route.post('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
       const todosService = Container.get(TodosService);
