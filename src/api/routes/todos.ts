@@ -21,7 +21,10 @@ const todos = (app: Router) => {
     try {
       const todosService = Container.get(TodosService);
       const todos = await todosService.addTodo(req.body);
-      return res.status(201).json(todos);
+      return res.status(201).json({
+        message: 'Todo item created successfully',
+        data: todos,
+      });
     } catch (error) {
       return next(error);
     }
