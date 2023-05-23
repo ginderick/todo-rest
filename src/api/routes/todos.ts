@@ -10,8 +10,15 @@ const todos = (app: Router) => {
   route.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
       const todosService = Container.get(TodosService);
-      const todos = await todosService.getTodos();
-      return res.status(200).json(todos);
+
+      const page = +req.query.page! || 1;
+      const limit = +req.query.limit! || 1;
+
+      const todos = await todosService.getTodos(page, limit);
+      return res.status(200).json({
+        page: page,
+        data: todos,
+      });
     } catch (error) {
       return next(error);
     }
