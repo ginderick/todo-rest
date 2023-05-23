@@ -54,6 +54,25 @@ const todos = (app: Router) => {
       return next(error);
     }
   });
+
+  route.patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const todosService = Container.get(TodosService);
+
+      const id = +req.params.id!;
+      const updatedFields = req.body;
+
+      const todo = await todosService.updateTodo(id, updatedFields);
+
+      if (!todo) return res.status(401).json({message: 'item not found'});
+      return res.status(201).json({
+        message: 'Todo item updated successfully',
+        data: todo,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  });
 };
 
 export default todos;
