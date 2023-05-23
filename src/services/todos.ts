@@ -33,4 +33,13 @@ export default class TodosService {
     });
     return todoItem;
   }
+
+  public async updateTodo(id: number, updatedFields: any) {
+    const todoItem = prisma.todo.update({
+      where: {id: id},
+      data: updatedFields,
+    });
+
+    return todoItem;
+  }
 }
