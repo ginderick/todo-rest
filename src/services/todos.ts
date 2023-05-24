@@ -1,7 +1,6 @@
 import {Service} from 'typedi';
 import prisma from '../../prisma';
 import {TodoCreate, TodoUpdate} from '../types';
-
 @Service()
 export default class TodosService {
   public async getTodos(page: number, limit: number) {
@@ -45,10 +44,13 @@ export default class TodosService {
   }
 
   public async deleteTodo(id: number) {
-    const todoItem = prisma.todo.delete({
-      where: {id: id},
-    });
-
+    const todoItem = prisma.todo
+      .delete({
+        where: {id: id},
+      })
+      .catch(reason => {
+        return reason;
+      });
     return todoItem;
   }
 
