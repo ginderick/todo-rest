@@ -36,3 +36,20 @@ describe('POST /users', () => {
     expect(res.status).toBe(201);
   });
 });
+
+describe('POST /users/logout', () => {
+  it('should return 200 for successful logout', async () => {
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnaW5kZXJpY2s2IiwiaWF0IjoxNjg0ODU1MDk2LCJleHAiOjE2ODQ4NTUzOTZ9.Nz94QOz7IFjLg-vBodP7tiQ-xKLTtoAe0_fDumOBMUU';
+
+    const tokenData = {
+      id: 1,
+      token: token,
+      createdAt: new Date(),
+    };
+    prismaMock.blacklistedToken.create.mockResolvedValue(tokenData);
+    const res = await request(server).post('/users/logout').send(loginPayload);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('message');
+  });
+});
