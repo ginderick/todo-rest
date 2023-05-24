@@ -19,6 +19,7 @@ export const localStrategy = new LocalStrategy(async function verify(
     if (!user || !result) {
       return done(null, false, {message: 'Invalid username or password'});
     }
+    return done(null, user);
   } catch (error) {
     return done(error);
   }
