@@ -1,11 +1,7 @@
+import {RequestValidator} from '../../types';
 import {NextFunction, Request, Response} from 'express';
 import {AnyZodObject, ZodError} from 'zod';
 
-type RequestValidator = {
-  params?: AnyZodObject;
-  body?: AnyZodObject;
-  query?: AnyZodObject;
-};
 export const requestValidator = (validators: RequestValidator) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {

@@ -4,6 +4,7 @@ import {NextFunction, Request, Response, Router} from 'express';
 import Container from 'typedi';
 import middlewares from '../middlewares';
 import {UserSchema} from '../../schema/UserSchema';
+import {UserCreate} from '../../types';
 
 const route = Router();
 
@@ -18,7 +19,8 @@ const users = (app: Router) => {
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const usersService = Container.get(UsersService);
-        const username = await usersService.addUser(req.body);
+        const user: UserCreate = req.body;
+        const username = await usersService.addUser(user);
         return res.status(201).json({
           message: 'User successfully created',
           username,

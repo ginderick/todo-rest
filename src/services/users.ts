@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import prisma from '../../prisma';
 import {Service} from 'typedi';
+import {UserCreate} from '../types';
 
 type userAdded = {
   id: number;
@@ -10,16 +11,18 @@ type userAdded = {
 
 @Service()
 export default class UsersService {
-  public async addUser(user: any) {
+  public async addUser(user: UserCreate) {
     const hashed_password = await bcrypt.hash(user.password, 10);
     const {password, ...userBody} = user;
 
-    userBody.hashed_password = hashed_password;
-
+    const userCreate = {
+      ...userBody,
+      hashed_password: hashed_password,
+    };
     const userAdded: userAdded = await prisma.user.create({
       data: {
         username: userBody.username,
-        hashed_password: userBody.hashed_password,
+        hashed_password: userCreate.hashed_password,
       },
     });
 
