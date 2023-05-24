@@ -1,5 +1,8 @@
 import {NextFunction, Request, Response} from 'express';
 import passport from 'passport';
+import {localStrategy} from '../strategies/localStrategy';
+
+passport.use('local', localStrategy);
 
 export const authenticate = (strategies: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
