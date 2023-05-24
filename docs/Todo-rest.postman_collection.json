@@ -186,7 +186,7 @@
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnaW5kZXJpY2s2IiwiaWF0IjoxNjg0ODk5MjEwLCJleHAiOjE2ODQ4OTk1MTB9.Lmv0tn6vpXLa_BIfI7YA7zNLSmnIZPxZqW5Gj43W7Zc"
+								"token": "{{access_token}}"
 							}
 						},
 						"method": "POST",
