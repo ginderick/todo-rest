@@ -59,3 +59,22 @@ describe('POST /todos/', () => {
     expect(res.body).toHaveProperty('data');
   });
 });
+
+describe('PATCH /todos/', () => {
+  it('should return 200 when updating a todo', async () => {
+    prismaMock.todo.update.mockResolvedValue(todo);
+    const token = await getAccessTokens();
+
+    const updatedData = {
+      name: 'todo name',
+    };
+
+    const res = await request(server)
+      .patch('/todos/1')
+      .set('Authorization', `Bearer ${token.access_token}`)
+      .send(updatedData);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('message');
+    expect(res.body).toHaveProperty('data');
+  });
+});
