@@ -78,3 +78,16 @@ describe('PATCH /todos/', () => {
     expect(res.body).toHaveProperty('data');
   });
 });
+
+describe('DELETE /todos/:id', () => {
+  it('should return 200 when deleting a todo', async () => {
+    prismaMock.todo.delete.mockResolvedValue(todo);
+    const token = await getAccessTokens();
+
+    const res = await request(server)
+      .delete('/todos/1')
+      .set('Authorization', `Bearer ${token.access_token}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('message');
+  });
+});
