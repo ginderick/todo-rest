@@ -1,16 +1,17 @@
 import jwt from 'jsonwebtoken';
 import {Service} from 'typedi';
 import prisma from '../../prisma';
+import config from '../config';
 
 @Service()
 export default class TokenService {
   public async generateAccessToken(username: string) {
-    const token = jwt.sign({sub: username}, 'secretKey', {expiresIn: '5m'});
+    const token = jwt.sign({sub: username}, config.token.privateJWTKey!, {expiresIn: '5m'});
     return token;
   }
 
   public async generateRefreshToken(username: string) {
-    const token = jwt.sign({sub: username}, 'secretKey', {expiresIn: '24h'});
+    const token = jwt.sign({sub: username}, config.token.privateJWTKey!, {expiresIn: '24h'});
     return token;
   }
 
