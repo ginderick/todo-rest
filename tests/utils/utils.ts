@@ -45,3 +45,18 @@ export const todoList = [
     dateCompleted: null,
   },
 ];
+
+export const todo = {
+  id: 1,
+  name: 'todo1',
+  description: 'todo1 description',
+  remarks: 'todo1 remarks',
+  dateCreated: new Date(),
+  dateCompleted: null,
+};
+
+export const todoPayload = {
+  name: 'todo1',
+  description: 'todo1 description',
+  remarks: 'todo1 remarks',
+};
