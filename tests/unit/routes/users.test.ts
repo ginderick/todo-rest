@@ -2,7 +2,7 @@ import request from 'supertest';
 import express from 'express';
 import 'reflect-metadata';
 import {prismaMock} from '../../singleton';
-import {loginPayload, loginWrongPasswordPayload, user} from './utils/utils';
+import {loginPayload, loginWrongPasswordPayload, user} from '../../utils/utils';
 
 let server;
 beforeEach(async () => {
