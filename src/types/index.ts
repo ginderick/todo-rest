@@ -28,3 +28,8 @@ export type TodoUpdate = {
   description?: string;
   remarks?: string;
 };
+
+export type Token = {
+  access_token: string;
+  refresh_token: string;
+};
