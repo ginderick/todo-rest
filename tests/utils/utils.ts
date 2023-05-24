@@ -60,3 +60,25 @@ export const todoPayload = {
   description: 'todo1 description',
   remarks: 'todo1 remarks',
 };
+
+export const todoItem = {
+  id: 1,
+  name: 'todo1',
+  description: 'todo1 description',
+  remarks: 'todo1 remarks',
+  dateCreated: new Date('2023-05-24T05:27:49.524Z'),
+  dateCompleted: null,
+};
+
+export const completeTodoPayload = {
+  dateCompleted: '2023-05-25T05:27:49.524Z',
+};
+
+export const completedTodo = {
+  id: 1,
+  name: 'todo1',
+  description: 'todo1 description',
+  remarks: 'todo1 remarks',
+  dateCreated: new Date('2023-05-24T05:27:49.524Z'),
+  dateCompleted: new Date('2023-05-25T05:27:49.524Z'),
+};
