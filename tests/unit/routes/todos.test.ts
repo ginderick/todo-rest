@@ -2,7 +2,15 @@ import request from 'supertest';
 import express from 'express';
 import 'reflect-metadata';
 import {prismaMock} from '../../singleton';
-import {loginPayload, todo, todoList, todoPayload, user} from '../../utils/utils';
+import {
+  completeTodoPayload,
+  loginPayload,
+  todo,
+  todoItem,
+  todoList,
+  todoPayload,
+  user,
+} from '../../utils/utils';
 import {Token} from '../../../src/types';
 
 let server;
@@ -87,6 +95,21 @@ describe('DELETE /todos/:id', () => {
     const res = await request(server)
       .delete('/todos/1')
       .set('Authorization', `Bearer ${token.access_token}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('message');
+  });
+});
+
+describe('PUT /todos/:id/completed', () => {
+  it('should return 200 when a todo item is completed', async () => {
+    prismaMock.todo.findUnique.mockResolvedValue(todoItem);
+    prismaMock.todo.update.mockResolvedValue(todo);
+    const token = await getAccessTokens();
+
+    const res = await request(server)
+      .put('/todos/1/completed')
+      .set('Authorization', `Bearer ${token.access_token}`)
+      .send(completeTodoPayload);
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty('message');
   });

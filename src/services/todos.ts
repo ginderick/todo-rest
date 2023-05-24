@@ -51,4 +51,15 @@ export default class TodosService {
 
     return todoItem;
   }
+
+  public async completeTodo(id: number, dateCompleted: Date) {
+    const todoItem = prisma.todo.update({
+      where: {id: id},
+      data: {
+        dateCompleted: dateCompleted,
+      },
+    });
+
+    return todoItem;
+  }
 }

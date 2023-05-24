@@ -16,6 +16,11 @@ export const TodoParamSchema = z.object({
   id: z.coerce.number(),
 });
 
+export const TodoDateCompletedSchema = z.object({
+  dateCompleted: z.coerce.date(),
+});
+
 export type TodoSchema = z.infer<typeof TodoSchema>;
 export type UpdateTodoSchema = z.infer<typeof UpdateTodoSchema>;
 export type TodoParamSchema = z.infer<typeof TodoParamSchema>;
+export type TodoDateCompletedSchema = z.infer<typeof TodoDateCompletedSchema>;

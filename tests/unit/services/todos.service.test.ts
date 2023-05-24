@@ -1,6 +1,6 @@
 import {prismaMock} from '../../singleton';
 import TodosService from '../../../src/services/todos';
-import {todoList, user, userPayload, todo, todoPayload} from '../../utils/utils';
+import {todoList, user, userPayload, todo, todoPayload, completedTodo} from '../../utils/utils';
 
 describe('Todo service', () => {
   it('should return all todo items', async () => {
@@ -43,5 +43,17 @@ describe('Todo service', () => {
     const todoItem = todosService.deleteTodo(id);
 
     await expect(todoItem).resolves.toEqual(todo);
+  });
+
+  it('should update a todo item with a date completed and return its value', async () => {
+    prismaMock.todo.update.mockResolvedValue(completedTodo);
+    const todosService = new TodosService();
+
+    const id = todo.id;
+    const dateCompleted = new Date('2023-05-25T05:27:49.524Z');
+
+    const todoItem = todosService.completeTodo(id, dateCompleted);
+
+    await expect(todoItem).resolves.toEqual(completedTodo);
   });
 });
