@@ -2,7 +2,12 @@ import TodosService from '../../services/todos';
 import {NextFunction, Request, Response, Router} from 'express';
 import Container from 'typedi';
 import middlewares from '../middlewares';
-import {TodoParamSchema, TodoSchema, UpdateTodoSchema} from '../../schema/TodoSchema';
+import {
+  TodoDateCompletedSchema,
+  TodoParamSchema,
+  TodoSchema,
+  UpdateTodoSchema,
+} from '../../schema/TodoSchema';
 import {TodoCreate, TodoUpdate} from '../../types';
 import {parseISO} from 'date-fns';
 
@@ -105,6 +110,9 @@ const todos = (app: Router) => {
 
   route.delete(
     '/:id',
+    middlewares.requestValidator({
+      params: TodoParamSchema,
+    }),
     middlewares.authenticate(['jwt']),
     async (req: Request, res: Response, next: NextFunction) => {
       try {
@@ -125,13 +133,17 @@ const todos = (app: Router) => {
 
   route.put(
     '/:id/completed',
+    middlewares.requestValidator({
+      params: TodoParamSchema,
+      body: TodoDateCompletedSchema,
+    }),
     middlewares.authenticate(['jwt']),
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const todosService = Container.get(TodosService);
 
         const id = +req.params.id!;
-        const dateCompleted = parseISO(req.body.dateCompleted);
+        const dateCompleted = parseISO(req.body.dateCompleted.toISOString());
 
         const todoItem = await todosService.getTodo(id);
         if (!todoItem) return res.status(401).json({message: 'item not found'});
