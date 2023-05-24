@@ -1,6 +1,8 @@
 import TodosService from '../../services/todos';
 import {NextFunction, Request, Response, Router} from 'express';
 import Container from 'typedi';
+import middlewares from '../middlewares';
+import {TodoParamSchema, TodoSchema, UpdateTodoSchema} from '../../schema/TodoSchema';
 
 const route = Router();
 
@@ -42,37 +44,50 @@ const todos = (app: Router) => {
     }
   });
 
-  route.post('/', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const todosService = Container.get(TodosService);
-      const todos = await todosService.addTodo(req.body);
-      return res.status(201).json({
-        message: 'Todo item created successfully',
-        data: todos,
-      });
-    } catch (error) {
-      return next(error);
+  route.post(
+    '/',
+    middlewares.requestValidator({
+      body: TodoSchema,
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const todosService = Container.get(TodosService);
+        const todos = await todosService.addTodo(req.body);
+        return res.status(201).json({
+          message: 'Todo item created successfully',
+          data: todos,
+        });
+      } catch (error) {
+        return next(error);
+      }
     }
-  });
+  );
 
-  route.patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const todosService = Container.get(TodosService);
+  route.patch(
+    '/:id',
+    middlewares.requestValidator({
+      body: UpdateTodoSchema,
+      params: TodoParamSchema,
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const todosService = Container.get(TodosService);
 
-      const id = +req.params.id!;
-      const updatedFields = req.body;
+        const id = +req.params.id!;
+        const updatedFields = req.body;
 
-      const todo = await todosService.updateTodo(id, updatedFields);
+        const todo = await todosService.updateTodo(id, updatedFields);
 
-      if (!todo) return res.status(401).json({message: 'item not found'});
-      return res.status(201).json({
-        message: 'Todo item updated successfully',
-        data: todo,
-      });
-    } catch (error) {
-      return next(error);
+        if (!todo) return res.status(401).json({message: 'item not found'});
+        return res.status(201).json({
+          message: 'Todo item updated successfully',
+          data: todo,
+        });
+      } catch (error) {
+        return next(error);
+      }
     }
-  });
+  );
 
   route.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
     try {
