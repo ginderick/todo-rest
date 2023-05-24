@@ -34,6 +34,7 @@ const users = (app: Router) => {
     middlewares.requestValidator({
       body: UserSchema,
     }),
+    middlewares.authenticate(['local']),
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const tokenService = Container.get(TokenService);
