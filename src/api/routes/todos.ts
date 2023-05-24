@@ -3,6 +3,7 @@ import {NextFunction, Request, Response, Router} from 'express';
 import Container from 'typedi';
 import middlewares from '../middlewares';
 import {TodoParamSchema, TodoSchema, UpdateTodoSchema} from '../../schema/TodoSchema';
+import {TodoCreate} from '@/types';
 
 const route = Router();
 
@@ -61,10 +62,12 @@ const todos = (app: Router) => {
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const todosService = Container.get(TodosService);
-        const todos = await todosService.addTodo(req.body);
+
+        const todo: TodoCreate = req.body;
+        const todoItem = await todosService.addTodo(todo);
         return res.status(201).json({
           message: 'Todo item created successfully',
-          data: todos,
+          data: todoItem,
         });
       } catch (error) {
         return next(error);

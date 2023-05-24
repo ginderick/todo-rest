@@ -1,5 +1,6 @@
 import {Service} from 'typedi';
 import prisma from '../../prisma';
+import {TodoCreate} from '../types';
 
 @Service()
 export default class TodosService {
@@ -21,7 +22,7 @@ export default class TodosService {
     return todo;
   }
 
-  public async addTodo(todo: any) {
+  public async addTodo(todo: TodoCreate) {
     const dateCreated = new Date();
     const todoItem = prisma.todo.create({
       data: {

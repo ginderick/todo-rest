@@ -1,15 +1,10 @@
 import {Strategy as JwtStrategy, ExtractJwt} from 'passport-jwt';
 import prisma from '../../../prisma';
+import {Payload} from '../../types';
 
 const jwtOptions = {
   secretOrKey: 'secretKey',
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-};
-
-type Payload = {
-  sub: string;
-  iat: number;
-  exp: number;
 };
 
 export const jwtStrategy = new JwtStrategy(jwtOptions, async (payload: Payload, done: any) => {
