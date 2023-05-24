@@ -92,7 +92,7 @@ const todos = (app: Router) => {
         const todo = await todosService.updateTodo(id, updatedFields);
 
         if (!todo) return res.status(401).json({message: 'item not found'});
-        return res.status(201).json({
+        return res.status(200).json({
           message: 'Todo item updated successfully',
           data: todo,
         });
