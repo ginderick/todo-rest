@@ -1,6 +1,6 @@
 import {Service} from 'typedi';
 import prisma from '../../prisma';
-import {TodoCreate} from '../types';
+import {TodoCreate, TodoUpdate} from '../types';
 
 @Service()
 export default class TodosService {
@@ -35,7 +35,7 @@ export default class TodosService {
     return todoItem;
   }
 
-  public async updateTodo(id: number, updatedFields: any) {
+  public async updateTodo(id: number, updatedFields: TodoUpdate) {
     const todoItem = prisma.todo.update({
       where: {id: id},
       data: updatedFields,

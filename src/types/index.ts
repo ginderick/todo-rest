@@ -22,3 +22,9 @@ export type TodoCreate = {
   description: string;
   remarks: string;
 };
+
+export type TodoUpdate = {
+  name?: string;
+  description?: string;
+  remarks?: string;
+};

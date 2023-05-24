@@ -3,7 +3,7 @@ import {NextFunction, Request, Response, Router} from 'express';
 import Container from 'typedi';
 import middlewares from '../middlewares';
 import {TodoParamSchema, TodoSchema, UpdateTodoSchema} from '../../schema/TodoSchema';
-import {TodoCreate} from '@/types';
+import {TodoCreate, TodoUpdate} from '../../types';
 
 const route = Router();
 
@@ -87,7 +87,7 @@ const todos = (app: Router) => {
         const todosService = Container.get(TodosService);
 
         const id = +req.params.id!;
-        const updatedFields = req.body;
+        const updatedFields: TodoUpdate = req.body;
 
         const todo = await todosService.updateTodo(id, updatedFields);
 
