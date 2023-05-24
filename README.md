@@ -11,6 +11,8 @@ There are 2 ways to get a local development env running:
 ```
 $ git clone https://github.com/ginderick/todo-rest.git
 $ npm install
+$ npx prisma migrate dev
+$ npx prisma generate
 $ npm run dev
 ```
 
