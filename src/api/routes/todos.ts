@@ -122,6 +122,11 @@ const todos = (app: Router) => {
 
         const todo = await todosService.deleteTodo(id);
 
+        if (todo.code === 'P2025')
+          return res.status(400).json({
+            message: todo.meta.cause,
+          });
+
         return res.status(200).json({
           message: 'Todo item deleted successfully',
         });
