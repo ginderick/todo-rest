@@ -4,6 +4,7 @@ import Container from 'typedi';
 import middlewares from '../middlewares';
 import {TodoParamSchema, TodoSchema, UpdateTodoSchema} from '../../schema/TodoSchema';
 import {TodoCreate, TodoUpdate} from '../../types';
+import {parseISO} from 'date-fns';
 
 const route = Router();
 
@@ -115,6 +116,39 @@ const todos = (app: Router) => {
 
         return res.status(200).json({
           message: 'Todo item deleted successfully',
+        });
+      } catch (error) {
+        return next(error);
+      }
+    }
+  );
+
+  route.put(
+    '/:id/completed',
+    middlewares.authenticate(['jwt']),
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const todosService = Container.get(TodosService);
+
+        const id = +req.params.id!;
+        const dateCompleted = parseISO(req.body.dateCompleted);
+
+        const todoItem = await todosService.getTodo(id);
+        if (!todoItem) return res.status(401).json({message: 'item not found'});
+        if (todoItem.dateCompleted)
+          return res.status(409).json({message: 'Todo item already completed'});
+
+        if (dateCompleted < todoItem.dateCreated) {
+          return res
+            .status(400)
+            .json({message: 'Todo item completed date should be greater than created data'});
+        }
+
+        const todo = await todosService.completeTodo(id, dateCompleted);
+
+        return res.status(200).json({
+          message: 'Todo item set as completed successfully',
+          data: todo,
         });
       } catch (error) {
         return next(error);
