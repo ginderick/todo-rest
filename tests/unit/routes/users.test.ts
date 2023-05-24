@@ -28,3 +28,11 @@ describe('POST /users/login', () => {
     expect(res.status).toBe(401);
   });
 });
+
+describe('POST /users', () => {
+  it('should return 201 for successful user creation', async () => {
+    prismaMock.user.create.mockResolvedValue(user);
+    const res = await request(server).post('/users').send(loginPayload);
+    expect(res.status).toBe(201);
+  });
+});
