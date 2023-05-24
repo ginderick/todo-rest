@@ -46,7 +46,7 @@ describe('GET /todos/:id', () => {
   });
 });
 
-describe('POST /todos/', () => {
+describe('POST /todos', () => {
   it('should return 201 when adding a todo', async () => {
     prismaMock.todo.create.mockResolvedValue(todo);
     const token = await getAccessTokens();
@@ -60,7 +60,7 @@ describe('POST /todos/', () => {
   });
 });
 
-describe('PATCH /todos/', () => {
+describe('PATCH /todos/:id', () => {
   it('should return 200 when updating a todo', async () => {
     prismaMock.todo.update.mockResolvedValue(todo);
     const token = await getAccessTokens();
