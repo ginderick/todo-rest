@@ -34,6 +34,23 @@ const users = (app: Router) => {
       return next(error);
     }
   });
+
+  route.post('/logout', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const tokenService = Container.get(TokenService);
+      const {authorization} = req.headers;
+
+      if (authorization && authorization.startsWith('Bearer ')) {
+        const token = authorization.slice(7); // Remove "Bearer " prefix
+        tokenService.blacklistToken(token);
+      }
+      return res.status(200).json({
+        message: 'Logout successful',
+      });
+    } catch (error) {
+      return next(error);
+    }
+  });
 };
 
 export default users;
