@@ -57,5 +57,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ginderick/todo-rest.git"
+  },
+  "release": {
+    "branches": [
+      "develop"
+    ]
   }
 }
