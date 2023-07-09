@@ -1,8 +1,9 @@
 name: Deploy MultiDocker
 on:
   push:
-    branches:
-      - develop
+    branches: [develop]
+  pull_request:
+    branches: '*'
 
 jobs:
   test:
