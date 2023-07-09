@@ -57,4 +57,4 @@ and is also available in the /docs folder
 - [Typedi](https://github.com/typestack/typedi) - Dependency injection
 - [Prisma](https://www.prisma.io/) - ORM and database migration tool
 - [Jest](https://jestjs.io/) - Testing framework
-- [Supertest](https://www.npmjs.com/package/supertest) - For http assertion
+- [Supertest](https://www.npmjs.com/package/supertest) - For http assertions
